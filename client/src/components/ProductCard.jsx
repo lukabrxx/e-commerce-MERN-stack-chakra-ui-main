@@ -44,7 +44,7 @@ const ProductCard = ({ product }) => {
   const toast = useToast()
 
   const cartInfo = useSelector((state) => state.cart)
-  console.log(cartInfo)
+
   const {cart} = cartInfo
 
   const addItem = (id) => {

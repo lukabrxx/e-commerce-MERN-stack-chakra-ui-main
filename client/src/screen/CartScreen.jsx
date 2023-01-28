@@ -21,7 +21,6 @@ import CartOrderSummary from '../components/CartOrderSummary';
 const CartScreen = () => {
   const cartInfo = useSelector((state) => state.cart);
   const { loading, error, cart } = cartInfo;
-  console.log(cartInfo)
   return (
   <Wrap spacing="30px" justify="center" minHeight="100vh">
     {loading ? (
@@ -47,7 +46,7 @@ const CartScreen = () => {
         <AlertTitle>Your cart is empty</AlertTitle>
         <AlertDescription>
           <Link as={ReactLink} to="/products">
-            Clikc here to see our products
+            Click here to see our products
           </Link>
         </AlertDescription>
       </Alert>
@@ -71,6 +70,7 @@ const CartScreen = () => {
                 {
                   cart.map((cartItem) =>(
                     <CartItem key={cartItem.id} cartItem={cartItem} />
+                    
                   ))
                 }
             </Stack>
