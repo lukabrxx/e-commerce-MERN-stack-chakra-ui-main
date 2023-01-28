@@ -75,7 +75,7 @@ const CartScreen = () => {
                 }
             </Stack>
           </Stack>
-          <Flex direction="colum" align="center" flex="1">
+          <Flex direction="column" align="center" flex="1">
             <CartOrderSummary />
 
             <HStack mt="6" fontWeight="semibold">
