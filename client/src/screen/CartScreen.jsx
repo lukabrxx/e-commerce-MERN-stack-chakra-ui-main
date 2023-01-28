@@ -17,6 +17,7 @@ import {
 import { Link as ReactLink } from 'react-router-dom'
 import { useSelector } from 'react-redux';
 import CartItem from '../components/CartItem';
+import CartOrderSummary from '../components/CartOrderSummary';
 const CartScreen = () => {
   const cartInfo = useSelector((state) => state.cart);
   const { loading, error, cart } = cartInfo;
@@ -75,7 +76,7 @@ const CartScreen = () => {
             </Stack>
           </Stack>
           <Flex direction="colum" align="center" flex="1">
-            {/**CartOrderSummary */}
+            <CartOrderSummary />
 
             <HStack mt="6" fontWeight="semibold">
                 <p>or</p>
