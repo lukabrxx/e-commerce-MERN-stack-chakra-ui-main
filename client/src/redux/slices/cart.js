@@ -42,11 +42,18 @@ export const cartSlice = createSlice({
         setError: (state,{payload}) => {
             state.error = payload 
             state.loading = false
+        },
+        cartItemRemoval: (state, {payload}) => {
+          state.cart = [...state.cart].filter((item) => item.id !== payload)
+          updateLocalStorage(state.cart)
+          state.subtotal = calculateSubtotal(state.cart)
+          state.loading = false 
+          state.error = null 
         }
     }
 })
 
-export const {setLoading, setError, cartItemAdd} = cartSlice.actions; // to actions 
+export const {setLoading, setError, cartItemAdd, cartItemRemoval} = cartSlice.actions; // to actions 
 
 export default cartSlice.reducer 
 

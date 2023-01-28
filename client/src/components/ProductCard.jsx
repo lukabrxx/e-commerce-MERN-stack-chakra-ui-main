@@ -23,7 +23,7 @@ import {addCartItem} from "../redux/action/cartActions"
 const Rating = ({ rating, numberOfReviews }) => {
   const { iconSize, setIconSize } = useState('14px');
   return (
-    <Flex>
+    <Flex >
       <HStack spacing='2px'>
         <StarIcon size={iconSize} w='14px' color='orange.500' />
         <StarIcon size={iconSize} w='14px' color={rating >= 2 ? 'orange.500' : 'gray.200'} />
@@ -70,7 +70,7 @@ const ProductCard = ({ product }) => {
       spacing="3px"
       bg={useColorModeValue('white', 'gray.800')}
       minW="240px"
-      h="450px"
+      minH="450px"
       borderWidth="1px"
       rounded="lg"
       shadow="lg"
@@ -117,11 +117,13 @@ const ProductCard = ({ product }) => {
             </Box>
             {product.price.toFixed(2)}
           </Box>
-          <Tooltip label="Add to Cart" bg="white" placment="top" color="gray.800" fontSize="1em">
-            <Button variant="ghost" display="flex" disabled={product.stock <= 0 } onClick={() => {addItem(product._id)}}>
-              <Icon as={FiShoppingCart} h="7" w="7" alignSelf="center" />
-            </Button>
-          </Tooltip>
+          {
+            product.stock > 0 ?  <Tooltip label='Add to cart' bg='white' placement={'top'} color={'gray.800'} fontSize={'1.2em'}>
+          <Button variant='ghost' display={'flex'}  onClick={() => addItem(product._id)}>
+            <Icon as={FiShoppingCart} h={7} w={7} alignSelf={'center'} />
+          </Button>
+        </Tooltip> : null
+          }
         </Flex>
       </Box>
       
