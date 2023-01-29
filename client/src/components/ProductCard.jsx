@@ -103,7 +103,7 @@ const ProductCard = ({ product }) => {
           <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="green">New</Badge>
         )}
         <Flex mt="1" justifyContent="space-between" align-content="center">
-          <Link as={ReactLink} to={`/product${product._id}`} pt="2" cursor="pointer">
+          <Link as={ReactLink} to={`/product/${product._id}`} pt="2" cursor="pointer">
             <Box fontSize="2xl" fontWeight="semibold" lineHeight="light">{product.name}</Box>
           </Link>
         </Flex>
