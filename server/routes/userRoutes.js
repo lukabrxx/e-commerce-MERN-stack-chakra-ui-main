@@ -8,8 +8,8 @@ const userRoutes = express.Router()
 //TODO expireIn 60day is just bsc of production (1,2h is normall)
 // id for a user token
 const genToken = (id) => {
-    return jwt.sign({id}, process.env.TOKEN_SECRET, {expireIn:"60d"})
-}
+    return jwt.sign({ id }, process.env.TOKEN_SECRET, { expiresIn: '60d' })
+  }
 // login user 
 const loginUser = asyncHandler(async(req,res) => {
     const {email, password} = req.body
