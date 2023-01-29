@@ -24,6 +24,7 @@ import {
   import { MdLocalShipping, MdLogout, MdOutlineAdminPanelSettings } from 'react-icons/md';
   import { FiShoppingCart } from 'react-icons/fi';
   import { GiTechnoHeart } from 'react-icons/gi';
+import { useState } from 'react';
 
   const NavLink = ({path,children}) => (
         <Link as={ReactLink} to={path} py={2} px={2} rounded="md" _hover={{textDecoration: "none", bg: useColorModeValue("gray.200", "gray.700")}}>{children}</Link>
@@ -36,16 +37,16 @@ import {
   const Navbar = () => {
     const {isOpen,onClose,onOpen} = useDisclosure()
     const {colorMode, toggleColorMode} = useColorMode()
- 
+    const [isHoovering, setIsHoovering] = useState(false)
   return (
     <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
     <Flex h={16} justifyContent="space-between" alignItems="center">
     <IconButton  size="md" icon={isOpen? <CloseIcon /> : <HamburgerIcon />} display={{md:"none"}} onClick={isOpen? onClose : onOpen }/>
 
 <HStack>
-    <Link as={ReactLink} to="/">
+    <Link as={ReactLink} to="/" style={{textDecoration: "none"}} onMouseEnter={() => {setIsHoovering(true)}} onMouseLeave={() => {setIsHoovering(false)}}>
         <Flex alignItems="center">
-            <Icon as={GiTechnoHeart} h={6} w={6} color="orange.400" />
+            <Icon as={GiTechnoHeart} h={6} w={6} color={isHoovering ? "cyan.400" : "orange.400"} />
             <Text fontWeight="extrabold">Tech</Text>
         </Flex>
     </Link>

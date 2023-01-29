@@ -1,7 +1,9 @@
 import { ChakraProvider } from "@chakra-ui/react";
 import {BrowserRouter, Routes, Route} from "react-router-dom"
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar"
 import CartScreen from "./screen/CartScreen";
+import LandingScreen from "./screen/LandingScreen";
 import ProductScreen from "./screen/ProductScreen";
 import ProductsScreen from "./screen/ProductsScreen"
 function App() {
@@ -11,12 +13,14 @@ function App() {
       <Navbar />
       <main>
       <Routes>
+      <Route path="/" element={<LandingScreen />} />
       <Route path="/products" element={<ProductsScreen />}/>
       <Route path="/cart" element={<CartScreen />}/>
       <Route path="/product/:id" element={<ProductScreen />}/>
-
+      
       </Routes>
       </main>
+      <Footer />
     </BrowserRouter>
    </ChakraProvider>
   );
