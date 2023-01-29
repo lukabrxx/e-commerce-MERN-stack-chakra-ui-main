@@ -49,6 +49,11 @@ const changeAmount = (input) => {
   }
 }
 
+const addItem = () => {
+  dispatch(addCartItem(product._id, amount))
+  toast({description: "Item has been added", status: "success", isClosable: true})
+}
+
   return (
     <Wrap spacing="30px" justify="center" minH="100vh">
       {loading ? (
@@ -103,9 +108,9 @@ const changeAmount = (input) => {
                     <HStack spacing="2px">
                       <StarIcon color="orange.500" />
                       <StarIcon color={product.rating >= 2 ? "orange.500" : "gray.200"} />
-                      <StarIcon color={product.rating >= 2 ? "orange.500" : "gray.200"} />
-                      <StarIcon color={product.rating >= 2 ? "orange.500" : "gray.200"} />
-                      <StarIcon color={product.rating >= 2 ? "orange.500" : "gray.200"} />
+                      <StarIcon color={product.rating >= 3 ? "orange.500" : "gray.200"} />
+                      <StarIcon color={product.rating >= 4 ? "orange.500" : "gray.200"} />
+                      <StarIcon color={product.rating >= 5 ? "orange.500" : "gray.200"} />
                     </HStack>
                   <Text fontSize="md" fontWeight="bold" ml="4px">{product.numberOfReviews} Reviews</Text>
                   </Flex>
@@ -117,9 +122,54 @@ const changeAmount = (input) => {
                   <Text mx="30px">{amount}</Text>
                   <Button isDisabled={product.stock >= amount ? false : true} onClick={() => changeAmount("plus")}><SmallAddIcon w="20px" h="25px" /></Button>
                 </Flex>
+                <Button colorScheme="orange" onClick={() => addItem()} >
+                  Add to cart
+                </Button>
+                <Stack width="270px">
+                  <Flex alignItems="center">
+                    <BiPackage size="20px" />
+                    <Text fontWeight="medium" fontSize="sm" ml="2">Free shipping if order is above 1000$</Text>
+                  </Flex>
+                  <Flex alignItems="center">
+                    <BiCheckShield size="20px" />
+                    <Text fontWeight="medium" fontSize="sm" ml="2">2 year extended garantie</Text>
+                  </Flex>
+                  <Flex alignItems="center">
+                    <BiSupport size="20px" />
+                    <Text fontWeight="medium" fontSize="sm" ml="2">We're here for u 24/7</Text>
+                  </Flex>
+                </Stack>
               </Stack>
               </Stack>
-            </Stack>
+              <Flex direction="column" align="center" flex="1" _dark={{bg: "gray.900"}}>
+                <Image mb="30px" src={product.image} alt={product.name} />
+              </Flex>
+               </Stack>
+
+              <Stack mt="8">
+                <Text fontSize="xl" fontWeight="bold">Reviews</Text>
+                <SimpleGrid minChildWidth="300px" spacingX="40px" spacingY="20px">
+                  {
+                    product.reviews.map((review) => (
+                      <Box key={review._id}>
+                        <Flex spacing="2px" alignItems="center">
+                        <StarIcon color="orange.500" />
+                        <StarIcon color={review.rating >=2 ? "orange.500" : "gray.200"} />
+                        <StarIcon color={review.rating >=3 ? "orange.500" : "gray.200"} />
+                        <StarIcon color={review.rating >=4 ? "orange.500" : "gray.200"} />
+                        <StarIcon color={review.rating >=5 ? "orange.500" : "gray.200"} />
+                        <Text fontWeight="semibold" ml="4px">
+                          {review.title && review.title}
+                        </Text>
+                        </Flex>
+                        <Box py="12px">{review.comment}</Box>
+                        <Text fontSize="sm" color="gray.400">by {review.name}, {new Date(review.createdAt).toDateString()}</Text>
+                      </Box>
+                    ))
+                  }
+                </SimpleGrid>
+              </Stack>
+           
           </Box>
         )
       )}
