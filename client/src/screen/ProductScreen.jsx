@@ -39,6 +39,16 @@ const ProductScreen = () => {
   useEffect(() => {
     dispatch(getProduct(id))
   }, [dispatch, id, cart])
+
+const changeAmount = (input) => {
+  if(input === "plus") {
+    setAmount(amount + 1)
+  } 
+  if(input === "minus") {
+    setAmount(amount - 1)
+  }
+}
+
   return (
     <Wrap spacing="30px" justify="center" minH="100vh">
       {loading ? (
@@ -88,8 +98,25 @@ const ProductScreen = () => {
               <Heading fontSize="2xl" fontWeight="extrabold">{product.name}</Heading>
               <Stack spacing="5">
                 <Box>
-                  
+                  <Text fontSize="xl">${product.price}</Text>
+                  <Flex>
+                    <HStack spacing="2px">
+                      <StarIcon color="orange.500" />
+                      <StarIcon color={product.rating >= 2 ? "orange.500" : "gray.200"} />
+                      <StarIcon color={product.rating >= 2 ? "orange.500" : "gray.200"} />
+                      <StarIcon color={product.rating >= 2 ? "orange.500" : "gray.200"} />
+                      <StarIcon color={product.rating >= 2 ? "orange.500" : "gray.200"} />
+                    </HStack>
+                  <Text fontSize="md" fontWeight="bold" ml="4px">{product.numberOfReviews} Reviews</Text>
+                  </Flex>
                 </Box>
+                <Text>{product.description}</Text>
+                <Text fontWeight="bold">Quantity</Text>
+                <Flex w="170px" p="5px" border="1px" borderColor="gray.200" alignItems="center">
+                  <Button isDisabled={amount <= 1 ? true : false} onClick={() => changeAmount("minus")}><MinusIcon /></Button>
+                  <Text mx="30px">{amount}</Text>
+                  <Button isDisabled={product.stock >= amount ? false : true} onClick={() => changeAmount("plus")}><SmallAddIcon w="20px" h="25px" /></Button>
+                </Flex>
               </Stack>
               </Stack>
             </Stack>
