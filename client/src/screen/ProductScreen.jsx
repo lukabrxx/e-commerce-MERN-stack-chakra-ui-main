@@ -100,6 +100,16 @@ const addItem = () => {
                     New
                   </Badge>
                 )}
+                {product.stock === 0 && (
+                  <Badge
+                    rounded="full"
+                    w="70px"
+                    fontSize="0.8em"
+                    colorScheme="red"
+                  >
+                    Sold out
+                  </Badge>
+                )}
               <Heading fontSize="2xl" fontWeight="extrabold">{product.name}</Heading>
               <Stack spacing="5">
                 <Box>
@@ -122,7 +132,7 @@ const addItem = () => {
                   <Text mx="30px">{amount}</Text>
                   <Button isDisabled={product.stock >= amount ? false : true} onClick={() => changeAmount("plus")}><SmallAddIcon w="20px" h="25px" /></Button>
                 </Flex>
-                <Button colorScheme="orange" onClick={() => addItem()} >
+                <Button colorScheme="orange" isDisabled={product.stock === 0 ? true : false } onClick={() => addItem()} >
                   Add to cart
                 </Button>
                 <Stack width="270px">
