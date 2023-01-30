@@ -32,7 +32,7 @@ export const userSlice = createSlice({
   },
 })
 
-export const { setLoading, setError, userLogin } = userSlice.actions
+export const { setLoading, setError, userLogin, userLogout } = userSlice.actions
 export default userSlice.reducer
 
 export const userSelector = (state) => state.user

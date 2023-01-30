@@ -1,5 +1,5 @@
 import axios from "axios"
-import { setLoading, setError, userLogin } from '../slices/user'
+import { setLoading, setError, userLogin, userLogout } from '../slices/user'
 
 // * LOGIN
 export const login = (email,password) => async(dispatch) => {
@@ -24,4 +24,9 @@ export const login = (email,password) => async(dispatch) => {
             )
           );
         }
+}
+//* LOGOUT
+export const logout = () => (dispatch) => {
+  localStorage.removeItem('userInfo')
+  dispatch(userLogout())
 }
