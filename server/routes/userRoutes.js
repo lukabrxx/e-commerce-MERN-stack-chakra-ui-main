@@ -2,6 +2,7 @@ import express from "express";
 import User from "../models/User.js";
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken"
+import protectRoute from "../middleware/authMiddleware.js"
 
 const userRoutes = express.Router()
 
@@ -61,8 +62,39 @@ const registerUser = asyncHandler(async(req,res) => {
     }
 })
 
+// update user profile
+const updateUserProfile = asyncHandler(async(req,res) => {
+    const user = await User.findById(req.params.id)
+
+    // ? if we didnt change zb. name that it takes old one (||)
+    if(user) {
+        user.name = req.body.name || user.name 
+        user.email = req.body.email || user.email 
+        if(req.body.password) {
+            user.password = req.body.password
+        }
+
+        const updateUser = await user.save()
+
+        res.json({
+            _id: updateUser._id,
+            name: updateUser.name,
+            email: updateUser.email,
+            isAdmin: updateUser.isAdmin,
+            token: genToken(updateUser._id),
+            createdAt: updateUser.createdAt,
+        })
+    } else {
+        res.status(404)
+        throw new Error("User not found.")
+    }
+})
+
 // ! ============== ROUTES ===================
+    //* put is to update req 
+    //* post to create something new 
+    //? protecteRoute is auth, updateUserProfile is update function (We can have multiple functions in route)
 userRoutes.post("/login", loginUser)
 userRoutes.post("/register", registerUser)
-
+userRoutes.put("/profile/:id", protectRoute, updateUserProfile)
 export default userRoutes
