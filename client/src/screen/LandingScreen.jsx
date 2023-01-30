@@ -16,7 +16,7 @@ import {
   import { GiTechnoHeart } from 'react-icons/gi';
   
   const LandingScreen = () => (
-    <Box maxW='8xl' mx='auto' px={{ base: '0', lg: '12' }} py={{ base: '0', lg: '12' }} minH='6xl'>
+    <Box maxW='8xl' mx='auto' px={{ base: '0', lg: '12' }} py={{ base: '0', lg: '20' }} minH="100vh">
       <Stack direction={{ base: 'column-reverse', lg: 'row' }} spacing={{ base: '0', lg: '20' }}>
         <Box
           width={{ lg: 'sm' }}
@@ -30,7 +30,7 @@ import {
               <Flex alignItems='center'>
                 <Icon as={GiTechnoHeart} h={12} w={12} color={useColorModeValue('orange.500', 'orange.300')} />
                 <Text fontSize='4xl' fontWeight='bold'>
-                  Tech Lines
+                  Tech
                 </Text>
               </Flex>
               <Heading size='xl' fontWeight='normal'>
@@ -52,12 +52,13 @@ import {
         </Box>
         <Flex flex='1' overflow='hidden'>
           <Image
-            src='images/landing.jpg'
+            src='../images/landing.jpg'
             alt='Lovely Image'
             fallback={<Skeleton />}
             maxH='550px'
             minW='300px'
             objectFit='cover'
+            borderRadius="20px"
             flex='1'
           />
         </Flex>

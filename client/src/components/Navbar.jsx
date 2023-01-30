@@ -28,12 +28,24 @@ import {
   import { useDispatch, useSelector } from 'react-redux';
   import { logout } from "../redux/action/userActions"
 
+  const ShoppingCartIcon = () => {
+    const cartInfo = useSelector((state) => state.cart)
+    const { cart } = cartInfo
+    return (
+      <Flex>
+      <Text fontStyle="italic" as="sub" fontSize="xs">{cart.length}</Text>
+      <Icon ml="-1.5" as={FiShoppingCart} h="4" w="7" alignSelf="center" />
+      Cart
+      </Flex>
+    )
+  }
+
   const NavLink = ({path,children}) => (
         <Link as={ReactLink} to={path} py={2} px={2} rounded="md" _hover={{textDecoration: "none", bg: useColorModeValue("gray.200", "gray.700")}}>{children}</Link>
     )
     const links = [
         {name: "Products", path: "/products"},
-        {name: "ShoppingCart", path: "/cart"},
+        {name: <ShoppingCartIcon />, path: "/cart"},
     ]
 
   const Navbar = () => {

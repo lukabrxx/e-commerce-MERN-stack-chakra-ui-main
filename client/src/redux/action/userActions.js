@@ -27,6 +27,7 @@ export const login = (email,password) => async(dispatch) => {
 }
 //* LOGOUT
 export const logout = () => (dispatch) => {
+  dispatch(resetUpdate())
   localStorage.removeItem('userInfo')
   dispatch(userLogout())
 }
@@ -70,7 +71,7 @@ export const updateProfile = (id,name,email,password) => async (dispatch, getSta
     }
     //? without config it would be not auth... 
     //? _id: id bcs we use _id as id, everything else is same key and same value
-    const {data} = await axios.put(`/api/users/profile${id}`, {_id: id, name, email, password}, config)
+    const {data} = await axios.put(`/api/users/profile/${id}`, {_id: id, name, email, password}, config)
     localStorage.setItem("userInfo", JSON.stringify(data))
     dispatch(updateUserProfile(data))
   } catch (error) {
@@ -87,6 +88,6 @@ export const updateProfile = (id,name,email,password) => async (dispatch, getSta
 }
 //* tell us everytime when update was successful (IMPORTENT) 
  //* we do it to avoid the loop
-export const resetUpdateSucces = () => async(dispatch) => {
+export const resetUpdateSuccess = () => async(dispatch) => {
 dispatch(resetUpdate())
 }

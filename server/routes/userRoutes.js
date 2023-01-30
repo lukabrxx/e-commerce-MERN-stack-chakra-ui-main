@@ -23,7 +23,8 @@ const loginUser = asyncHandler(async(req,res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-            token: genToken(user._id)
+            token: genToken(user._id),
+            createdAt: user.createdAt
         })
     } else {
         // * bcs of the async handler this go directly to the frontend
