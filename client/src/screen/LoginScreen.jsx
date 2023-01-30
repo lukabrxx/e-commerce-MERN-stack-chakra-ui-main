@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react'
 import {
   Box,
   Button,
@@ -16,42 +15,59 @@ import {
   AlertTitle,
   AlertDescription,
   useToast,
-} from '@chakra-ui/react'
-import { Formik } from 'formik'
-import * as Yup from 'yup'
-import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate, Link as ReactLink, useLocation } from 'react-router-dom'
-import PasswordTextField from '../components/PasswordTextField'
-import TextField from '../components/TextField'
-//TODO pw make more chr if it is for production
+} from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate, Link as ReactLink, useLocation } from 'react-router-dom';
+import PasswordTextField from '../components/PasswordTextField';
+import TextField from '../components/TextField';
+import { login } from "../redux/action/userActions";
+
+//TODO: redefine password length
 const LoginScreen = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const redirect = '/products';
   const toast = useToast();
-  //? if we did it in jsx it would break formik
-  const headingBr = useBreakpointValue({base:"xs", md:"sm"})
-  const boxBr = useBreakpointValue({base:"transparent", bg:"surface"})
+
+  const user = useSelector((state) => state.user);
+  const { loading, error, userInfo } = user;
+
+  const headingBR = useBreakpointValue({ base: 'xs', md: 'sm' });
+  const boxBR = useBreakpointValue({ base: 'transparent', md: 'bg-surface' });
+  // ? location from if we came from some site that it is not /login
+  useEffect(() => {
+    if (userInfo) {
+      if (location.state?.from) {
+        navigate(location.state.from);
+      } else {
+        navigate(redirect);
+      }
+      toast({ description: 'Login successful.', status: 'success', isClosable: true });
+    }
+  }, [userInfo, redirect, error, navigate, location.state, toast]);
 
   return (
-  <Formik
-  initialValues={{email: "", password: ""}}
-    validationSchema={Yup.object({
-        email: Yup.string().email("Invalid Email").required("An email address is required"),
-        password:  Yup.string().min(1, "Password is to short - must contain at least 1 character").required("password is required")
-    })}
-    onSubmit={(value) => {
-        dispatch(login(value.email, value.password))
-    }}
-  >
-  {
-    (formik) => {
-      <Container maxW='lg' py={{ base: '12', md: '24' }} px={{ base: '0', md: '8' }} minH='4xl'>
+    <Formik
+      initialValues={{ email: '', password: '' }}
+      validationSchema={Yup.object({
+        email: Yup.string().email('Invalid email.').required('An email address is required.'),
+        password: Yup.string()
+          .min(1, 'Password is too short - must contain at least 1 character.')
+          .required('Password is required.'),
+      })}
+      onSubmit={(values) => {
+        dispatch(login(values.email, values.password));
+      }}>
+      {(formik) => (
+        <Container maxW='lg' py={{ base: '12', md: '24' }} px={{ base: '0', md: '8' }} minH='4xl'>
           <Stack spacing='8'>
             <Stack spacing='6'>
               <Stack spacing={{ base: '2', md: '3' }} textAlign='center'>
-                <Heading size={headingBr}>Log in to your account</Heading>
+                <Heading size={headingBR}>Log in to your account</Heading>
                 <HStack spacing='1' justify='center'>
                   <Text color='muted'>Don't have an account ?</Text>
                   <Button as={ReactLink} to='/registration' variant='link' colorScheme='orange'>
@@ -63,7 +79,7 @@ const LoginScreen = () => {
             <Box
               py={{ base: '0', md: '8' }}
               px={{ base: '4', md: '10' }}
-              bg={{ boxBr }}
+              bg={{ boxBR }}
               boxShadow={{ base: 'none', md: 'xl' }}>
               <Stack spacing='6' as='form' onSubmit={formik.handleSubmit}>
                 {error && (
@@ -93,11 +109,9 @@ const LoginScreen = () => {
             </Box>
           </Stack>
         </Container>
-    }
-  }
+      )}
+    </Formik>
+  );
+};
 
-  </Formik>
-  )
-}
-
-export default LoginScreen
+export default LoginScreen;

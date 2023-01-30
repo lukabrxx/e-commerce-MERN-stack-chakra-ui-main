@@ -1,5 +1,5 @@
 import axios from "axios"
-
+import { setLoading, setError, userLogin } from '../slices/user'
 
 // * LOGIN
 export const login = (email,password) => async(dispatch) => {
