@@ -1,5 +1,5 @@
 import axios from "axios"
-import { setLoading, setError, userLogin, userLogout, updateUserProfile, resetUpdate } from '../slices/user'
+import { setLoading, setError, userLogin, userLogout, updateUserProfile, resetUpdate, setUserOrders } from '../slices/user'
 
 // * LOGIN
 export const login = (email,password) => async(dispatch) => {
@@ -90,4 +90,31 @@ export const updateProfile = (id,name,email,password) => async (dispatch, getSta
  //* we do it to avoid the loop
 export const resetUpdateSuccess = () => async(dispatch) => {
 dispatch(resetUpdate())
+}
+
+//* USER ORDERS
+
+export const getUserOrders = () => async(dispatch, getState) => {
+  dispatch(setLoading(true))
+  const {user : {userInfo} } = getState() 
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+        'Content-Type': 'application/json',
+      }
+    }
+    const {data} = await axios.get(`/api/users/${userInfo._id}`, config)
+    dispatch(setUserOrders(data))
+  } catch(error) {
+    dispatch(
+      setError(
+        error.response && error.response.data
+          ? error.response.data
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    )
+  }
 }

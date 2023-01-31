@@ -1,8 +1,10 @@
 import express from "express";
 import User from "../models/User.js";
+import Order from "../models/Order.js"
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken"
 import protectRoute from "../middleware/authMiddleware.js"
+import { OrderedList } from "@chakra-ui/react";
 
 const userRoutes = express.Router()
 
@@ -91,11 +93,25 @@ const updateUserProfile = asyncHandler(async(req,res) => {
     }
 })
 
+// user orders 
+const getUserOrders = asyncHandler(async(req,res) => {
+    const orders = await Order.find({user: req.params.id})
+    if(orders) {
+        res.json(orders) 
+    } else {
+        res.status(404)
+        throw new Error("No orders found")
+    }
+
+})
+
 // ! ============== ROUTES ===================
     //* put is to update req 
     //* post to create something new 
+    //* get fetch data from api
     //? protecteRoute is auth, updateUserProfile is update function (We can have multiple functions in route)
 userRoutes.post("/login", loginUser)
 userRoutes.post("/register", registerUser)
 userRoutes.put("/profile/:id", protectRoute, updateUserProfile)
+userRoutes.get("/:id", protectRoute, getUserOrders)
 export default userRoutes
