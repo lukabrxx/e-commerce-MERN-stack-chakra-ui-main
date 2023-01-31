@@ -67,6 +67,6 @@ const createProductReview = asyncHandler(async (req, res) => {
 //! ====== routes =============
 productRoutes.get('/', getProducts)
 productRoutes.get('/:id', getProduct)
-productRoutes.post('reviews/:id', productRoutes, createProductReview)
+productRoutes.post('/reviews/:id', protectRoute, createProductReview)
 
 export default productRoutes

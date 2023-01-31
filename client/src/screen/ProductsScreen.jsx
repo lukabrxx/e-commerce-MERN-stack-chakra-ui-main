@@ -5,7 +5,7 @@ import ProductCard from '../components/ProductCard'
 import { getProducts } from '../redux/action/productActions.js'
 const ProductsScreen = () => {
   const dispatch = useDispatch()
-
+  
   const productList = useSelector((state) => state.products)
   const { loading, error, products } = productList
 
