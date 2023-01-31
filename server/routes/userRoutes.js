@@ -4,7 +4,6 @@ import Order from "../models/Order.js"
 import asyncHandler from "express-async-handler";
 import jwt from "jsonwebtoken"
 import protectRoute from "../middleware/authMiddleware.js"
-import { OrderedList } from "@chakra-ui/react";
 
 const userRoutes = express.Router()
 
