@@ -42,4 +42,3 @@ export const setShippingAddress = (data) => (dispatch) => {
     dispatch(clearOrder());
   };
 
-expo
