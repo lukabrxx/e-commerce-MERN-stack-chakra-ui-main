@@ -101,15 +101,15 @@ import {
                   <MdLocalShipping />
                   <Text ml='2'>Your Orders</Text>
                 </MenuItem>
-                {userInfo.isAdmin === 'true' && (
+                {userInfo.isAdmin ? (
                   <>
                     <MenuDivider />
                     <MenuItem as={ReactLink} to={'/admin-console'}>
                       <MdOutlineAdminPanelSettings />
                       <Text ml='2'>Admin Console</Text>
                     </MenuItem>
-                  </>
-                )}
+                  </>) : null
+                }
                 <MenuDivider />
                 <MenuItem onClick={logoutHandler}>
                   <MdLogout />
@@ -120,7 +120,7 @@ import {
 ) : (
     <>
     <Button as={ReactLink} to="/login" p={2} fontSize="sm" fontWeight={400} variant="link" display={{base:"none" , md:"inline-flex"}}>Sign In</Button>
-<Button as={ReactLink} to="/register" p={2} fontSize="sm" fontWeight={600} variant="link" _hover={{bg:"orange.400"}} bg="orange.500" color="white" display={{base:"none" , md:"inline-flex"}}>Sign up</Button>
+<Button as={ReactLink} to="/registration" p={2} fontSize="sm" fontWeight={600} variant="link" _hover={{bg:"orange.400"}} bg="orange.500" color="white" display={{base:"none" , md:"inline-flex"}}>Sign up</Button>
 </>)}
 </Flex>
 </Flex>
@@ -134,7 +134,7 @@ import {
         ))
         }
         {userInfo ? null : <>
-            <NavLink key="sign-up" path="/register">Sign Up</NavLink>
+            <NavLink key="sign-up" path="/registration">Sign Up</NavLink>
         <NavLink key="sign-in" path="/login">Sign In</NavLink>  
         </> }
       
